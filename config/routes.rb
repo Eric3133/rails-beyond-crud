@@ -8,5 +8,24 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :restaurants
+  resources :restaurants do
+    #additional routs that relate to restaurants go here:
+
+    resources :reviews, only: [:new, :create]
+      collection do
+        #/restaurants/whatever_word_you_say
+        get :top
+      end
+
+      member do
+        #/restaurants/:id/whatever_word_you_say
+        get :chef
+
+      end
+  end
+
+  resources :reviews, only: [:destroy]
 end
+
+  # get "restaurants/top", to: "restaurants#top"
+  # get "restaurants/:id/chef", to: "restaurants#chef"
